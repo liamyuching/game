@@ -1,0 +1,36 @@
+mport pygame
+from pygame.locals import *
+from sys import exit
+pygame.init()
+bgsize = width,height =1000,600
+pygame.display.set_mode(bgsize)
+pygame.display.set_caption('ball')
+bg = (0,0,0)
+ball_image = pygame.image.load('images/ball.png')
+screen = pygame.display.get_surface()
+class Ball(pygame.sprite.Sprite):
+    def __init__(self,up_speed,down_speed):
+        pygame.sprite.Sprite.__init__(self)
+        self.up_speed = up_speed
+        self.down_speed = down_speed
+        self.image = ball_image
+        self.rect.top = 0
+        self.rect.left = (width-self.image.get_width())//2
+    def moveup(self):
+        self.rect.top -= self.up_speed
+ 
+    def movedown(self):
+        self.rect.top += self.down_speed
+ball = Ball(6.4)
+clock = pygame.time.Clock()
+while 1:
+    for event in pygame.event.get():
+        if event.type ==QUIT:
+            exit()
+    key_press = pygame.key.get_pressed()
+    if not key_press[K_UP] and ball.rect.bottom < height> 0:
+        ball.moveup()
+    screen.fill(bg)
+    screen.blit(ball_image,ball,rect)
+    clock.tick(25)
+    pygame.display.flip()
